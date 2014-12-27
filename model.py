@@ -19,13 +19,13 @@ class Model:
     def get_field(self):
         pass
 
-    def update(self):
+    def update(self, data, where):
         pass
 
-    def insert(self):
+    def insert(self, data):
         pass
 
-    def delete(self):
+    def delete(self, where):
         pass
 
     def get_last_sql(self):

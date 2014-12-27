@@ -5,8 +5,10 @@ __author__ = 'Ma'
 
 
 class Model:
+    table_name = None
+
     def __init__(self):
-        pass
+        self.table_name = self.__class__.__name__
 
     def query(self):
         pass

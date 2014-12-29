@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Ma'
+import torndb
 
 
 class Model:
@@ -10,9 +11,11 @@ class Model:
     _order = None
     _limit_start = 0
     _limit_length = 0
+    db = None
 
     def __init__(self):
         self.table_name = self.__class__.__name__
+        self.db = torndb.Connection("", "")
 
     def query(self):
         pass
@@ -24,17 +27,17 @@ class Model:
         pass
 
     def update(self, data):
-        print "UPDATE table SET " + ",".join([k + "=" + str(v) for k, v in data.items()])
+        sql = "UPDATE table SET " + ",".join([k + "=" + str(v) for k, v in data.items()]) + self._build_sql()
+        return self.db.update(sql)
 
     def insert(self, data):
-        print data.values()
-        print ",".join([2,6,8])
         sql = "INSERT INTO " + self.table_name + "(" + ",".join(data.keys()) + ") VALUES (" + ",".join(
             data.values()) + ")"
-        return sql
+        self.db.insert(sql)
 
     def delete(self):
         sql = "DELETE FROM " + self.table_name + self._build_sql()
+        self.db.execute_rowcount(sql)
 
     def get_last_sql(self):
         pass

@@ -97,7 +97,3 @@ class Model:
         if self._limit_length > 0:
             sql += " LIMIT " + self._limit_start + "," + self._limit_length
         return sql
-
-
-model = Model()
-print model.insert({"name": "ma", "age": 22})

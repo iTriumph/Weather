@@ -25,7 +25,6 @@ class UserModel:
                       token)
         return info
 
-
     @staticmethod
     def sign_in(email, password):
         """
@@ -46,7 +45,6 @@ class UserModel:
                 return -2
             else:
                 return -1
-
 
     @staticmethod
     def sign_up(email, password):

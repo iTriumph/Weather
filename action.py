@@ -10,6 +10,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def data_received(self, chunk):
         pass
 
+    def get_current_user(self):
+        pass
+
 
 class HomeHandler(BaseHandler):
     def get(self):

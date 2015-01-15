@@ -7,11 +7,16 @@ from model.resource import ResourceModel
 
 
 class BaseHandler(tornado.web.RequestHandler):
+    user = None
     def data_received(self, chunk):
         pass
 
     def get_current_user(self):
-        pass
+        email = self.get_argument("email", "")
+        token = self.get_argument("token", "")
+        user = UserModel.get_current_user(email, token)
+        self.user = user
+        return bool(self.user)
 
 
 class HomeHandler(BaseHandler):
@@ -41,4 +46,14 @@ class ResourceCreate(BaseHandler):
     """
 
     def post(self):
-        self.write("")
+        url = self.get_argument("url", None)
+        resource_type = self.get_argument("type", "text")
+        r_model = ResourceModel(self.user.id)
+        r_model.create(url,resource_type)
+class ResourceList(BaseHandler):
+    """
+    获取资源列表
+    """
+    def post(self):
+        r_model = ResourceModel(self.user.id)
+        resource_list = r_model.recource_list()

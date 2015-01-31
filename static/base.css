@@ -1,4 +1,31 @@
 
-div.left{
+div{
     float:left;
+}
+#header{
+    position: fixed;
+    heigh:70px;
+}
+#title{
+    text-align: center;
+    width: 100%;
+    position: fixed;
+}
+#search{
+    float:right;
+    position: fixed;
+    right:0;
+}
+#content{
+    margin-top:70px;
+}
+#left{
+    width:250px;
+}
+.button{
+    width:100%;
+    text-align: center;
+}
+#right{
+
 }

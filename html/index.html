@@ -3,28 +3,17 @@
 <head>
     <title>App</title>
     <meta charset="utf-8"/>
-
-    <script src="../static/angular.min.js"></script>
-    <script src="../static/script.js"></script>
-
+    <link href="../static/base.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-
-
-    <div ng-controller="GreetCtrl">
-        Hello {{name}}!
+    <div id="header" class="left">
+        <div id="logo" class="left">Sm:)e</div>
+        <div id="title" class="left">Book Mark</div>
     </div>
-    <div ng-controller="ListCtrl">
-        <ol>
-            <li ng-repeat="name in names">{{name}}</li>
-        </ol>
+    <div id="content" class="left">
+        <div id="left" class="left"></div>
+        <div id="right" class="left"></div>
     </div>
-    <div ng-init="list = ['Chrome', 'Safari', 'Firefox', 'IE'] ">
-        Number formatting: {{ 1234567890 | number }} <br>
-        array filtering <input ng-model="predicate">
-        {{ list | filter:predicate | json }}
-    </div>
-
 </body>
 </html>

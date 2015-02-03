@@ -1,0 +1,8 @@
+/*项目列表的样式*/
+/*定义main*/
+#main {
+    width: 600%;
+    clear: both;
+    margin-top: 36px;
+    overflow-y: hidden;
+}

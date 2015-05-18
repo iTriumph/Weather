@@ -107,3 +107,4 @@ class UserModel:
     @staticmethod
     def get_random_str(length=10):
         return ''.join(random.sample(string.ascii_lowercase + string.digits, length))
+print UserModel.sign_in("562600828@qq.com", "123456")

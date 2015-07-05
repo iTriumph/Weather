@@ -54,3 +54,5 @@ class ResourceModel:
         result = db.update("DELETE FROM user_resource WHERE user_id = %s AND resource_id = %s", self.user_id,
                            resource_id)
         return result
+
+print ResourceModel(1).resource_list("text")

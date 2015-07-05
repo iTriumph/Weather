@@ -3,17 +3,7 @@
 
 from __future__ import absolute_import, division, with_statement
 
-__author__ = 'Ma'
-
-"""A lightweight wrapper around MySQLdb.
-
-Originally part of the Tornado framework.  The tornado.database module
-is slated for removal in Tornado 3.0, and it is now available separately
-as torndb.
-"""
-
 import copy
-import itertools
 import logging
 import os
 import time
@@ -31,9 +21,8 @@ except ImportError:
     else:
         raise
 
-version = "0.1"
-version_info = (0, 1, 0, 0)
-
+version = "0.3"
+version_info = (0, 3, 0, 0)
 
 class Connection(object):
     """A lightweight wrapper around MySQLdb DB-API connections.
@@ -48,20 +37,27 @@ class Connection(object):
     Cursors are hidden by the implementation, but other than that, the methods
     are very similar to the DB-API.
 
-    We explicitly set the timezone to UTC and the character encoding to
-    UTF-8 on all connections to avoid time zone and encoding errors.
-    """
+    We explicitly set the timezone to UTC and assume the character encoding to
+    UTF-8 (can be changed) on all connections to avoid time zone and encoding errors.
 
+    The sql_mode parameter is set by default to "traditional", which "gives an error instead of a warning"
+    (http://dev.mysql.com/doc/refman/5.0/en/server-sql-mode.html). However, it can be set to
+    any other mode including blank (None) thereby explicitly clearing the SQL mode.
+
+    Arguments read_timeout and write_timeout can be passed using kwargs, if
+    MySQLdb version >= 1.2.5 and MySQL version > 5.1.12.
+    """
     def __init__(self, host, database, user=None, password=None,
                  max_idle_time=7 * 3600, connect_timeout=0,
-                 time_zone="+0:00"):
+                 time_zone="+0:00", charset = "utf8", sql_mode="TRADITIONAL",
+                 **kwargs):
         self.host = host
         self.database = database
         self.max_idle_time = float(max_idle_time)
 
-        args = dict(conv=CONVERSIONS, use_unicode=True, charset="utf8",
+        args = dict(conv=CONVERSIONS, use_unicode=True, charset=charset,
                     db=database, init_command=('SET time_zone = "%s"' % time_zone),
-                    connect_timeout=connect_timeout, sql_mode="TRADITIONAL")
+                    connect_timeout=connect_timeout, sql_mode=sql_mode, **kwargs)
         if user is not None:
             args["user"] = user
         if password is not None:
@@ -122,12 +118,16 @@ class Connection(object):
         try:
             self._execute(cursor, query, parameters, kwparameters)
             column_names = [d[0] for d in cursor.description]
-            return [Row(itertools.izip(column_names, row)) for row in cursor]
+            return [Row(zip(column_names, row)) for row in cursor]
         finally:
             cursor.close()
 
     def get(self, query, *parameters, **kwparameters):
-        """Returns the first row returned for the given query."""
+        """Returns the (singular) row returned by the given query.
+
+        If the query has no results, returns None.  If it has
+        more than one result, raises an exception.
+        """
         rows = self.query(query, *parameters, **kwparameters)
         if not rows:
             return None
@@ -204,7 +204,7 @@ class Connection(object):
         # case by preemptively closing and reopening the connection
         # if it has been idle for too long (7 hours by default).
         if (self._db is None or
-                (time.time() - self._last_use_time > self.max_idle_time)):
+            (time.time() - self._last_use_time > self.max_idle_time)):
             self.reconnect()
         self._last_use_time = time.time()
 
@@ -223,13 +223,11 @@ class Connection(object):
 
 class Row(dict):
     """A dict that allows for object-like property access syntax."""
-
     def __getattr__(self, name):
         try:
             return self[name]
         except KeyError:
             raise AttributeError(name)
-
 
 if MySQLdb is not None:
     # Fix the access conversions to properly recognize unicode/binary

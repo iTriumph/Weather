@@ -1,0 +1,8 @@
+#smile_insert_box{
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+body{
+    background: red;
+}

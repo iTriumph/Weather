@@ -8,12 +8,11 @@
     "default_locale": "zh_CN",
     "name": "@Todo",
     "description": "__MSG_extension_description__",
-    "homepage_url": "http://attodo.com",
+    "homepage_url": "http://laoma.im",
 
     "permissions": ["tabs", "contextMenus", "http://*/*", "https://*/*"],
     "browser_action": {
         "default_icon": "Static/icon.png",
-        "default_popup": "popup.html",
         "default_title": "__MSG_extension_description__"
     },
     "icons": {

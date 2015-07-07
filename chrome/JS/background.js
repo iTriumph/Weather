@@ -1,6 +1,5 @@
 function save_page(info, tab){
     console.log(info);
-    chrome.tabs.executeScript(null, {code:"document.body.bgColor='red'"});
 }
 
 function save_image(info, tab){

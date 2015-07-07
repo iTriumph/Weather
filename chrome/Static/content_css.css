@@ -2,7 +2,93 @@
     position: fixed;
     top: 0px;
     right: 0px;
+    z-index: 100000;
+    width: 336px;
+    height: 80px;
+    margin: 16px;
+    background-color: rgb(240, 240, 240);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 5px;
 }
-body{
-    background: red;
+#smile_insert_box #close{
+    color: #333;
+    float: right;
+    font-size: 20px;
+    margin: 0px 6px 0 0;
+}
+#smile_insert_box #result{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px auto 0;
+}
+#smile_insert_box #option{
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+#smile_insert_box #loading {
+  margin: 15px auto;
+  width: 130px;
+  height: 50px;
+  text-align: center;
+  font-size: 10px;
+}
+
+#smile_insert_box #loading > div {
+  background-color: #333;
+  height: 100%;
+  width: 7px;
+  margin: 0 4px;
+  display: inline-block;
+
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+#smile_insert_box #loading .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+#smile_insert_box #loading .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+#smile_insert_box #loading .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+#smile_insert_box #loading .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+#smile_insert_box #loading .rect6 {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }
